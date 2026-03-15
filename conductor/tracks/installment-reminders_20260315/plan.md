@@ -29,13 +29,13 @@ Build the bridge to the LINE Messaging API.
 
 ### Tasks
 
-- [ ] Task 2.1: Implement `sendLinePushMessage` utility in `src/shared/lib/line/api.ts`.
-- [ ] Task 2.2: Add `LINE_CHANNEL_ACCESS_TOKEN` and `LINE_CHANNEL_SECRET` placeholders to `.env.example`.
-- [ ] Task 2.3: Force-refresh `customer-line-id` data to ensure we have IDs for testing.
+- [x] Task 2.1: Implement `sendLinePushMessage` utility in `src/shared/lib/line/api.ts`.
+- [x] Task 2.2: Add `LINE_CHANNEL_ACCESS_TOKEN` and `LINE_CHANNEL_SECRET` placeholders to `.env.example`.
+- [x] Task 2.3: Force-refresh `customer-line-id` data to ensure we have IDs for testing.
 
 ### Verification
 
-- [ ] Use a scratch script to send a test push message to a known LINE ID.
+- [x] Use a scratch script to send a test push message to a known LINE ID.
 
 ## Phase 3: Billing Dashboard & Insights
 
