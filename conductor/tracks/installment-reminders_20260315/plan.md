@@ -3,7 +3,7 @@
 **Track ID:** installment-reminders_20260315
 **Spec:** spec.md
 **Created:** 2026-03-15
-**Status:** [~] In Progress
+**Status:** [x] Complete
 
 ## Overview
 
@@ -57,18 +57,18 @@ Enable customers to see their payment history.
 
 ### Tasks
 
-- [ ] Task 4.1: Update `CustomerProfile` to include a "Payment Trace" timeline showing Purchases (Increase Debt) and Payments (Decrease Debt).
-- [ ] Task 4.2: Ensure the data is sorted chronologically.
+- [x] Task 4.1: Update `CustomerProfile` to include a "Payment Trace" timeline showing Purchases (Increase Debt) and Payments (Decrease Debt).
+- [x] Task 4.2: Ensure the data is sorted chronologically.
 
 ### Verification
 
-- [ ] View a customer profile and confirm a clear history of debt-related activities.
+- [x] View a customer profile and confirm a clear history of debt-related activities.
 
 ## Final Verification
 
-- [ ] All acceptance criteria met.
-- [ ] LINE Push triggers correctly from the UI.
-- [ ] Ready for review.
+- [x] All acceptance criteria met.
+- [x] LINE Push triggers correctly from the UI.
+- [x] Ready for review.
 
 ---
 

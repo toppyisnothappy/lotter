@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import { getCustomerHistoryAction } from "../api/actions"
-import { Clock, ShoppingCart, CreditCard, ExternalLink } from "lucide-react"
+import { Clock, ShoppingCart, CreditCard, ExternalLink, Wallet } from "lucide-react"
+import { cn } from "@/shared/lib/utils/utils"
 
 export function TransactionTimeline({ customerId, organizationId }: { customerId: string, organizationId: string }) {
     const [history, setHistory] = useState<any[]>([])
@@ -42,19 +43,26 @@ export function TransactionTimeline({ customerId, organizationId }: { customerId
             <div className="relative border-l border-white/10 ml-4 space-y-8 pb-4">
                 {history.map((item, i) => {
                     const isPayment = item._type === 'payment'
+                    const isInstallmentPurchase = !isPayment && item.status === 'partial'
                     const date = new Date(item.createdAt).toLocaleString()
 
                     return (
                         <div key={item.id + i} className="relative pl-8">
-                            <div className={`absolute -left-4 top-1 h-8 w-8 rounded-full flex items-center justify-center border-2 border-black ${isPayment ? 'bg-emerald-500 text-black' : 'bg-white/10 text-white'}`}>
-                                {isPayment ? <CreditCard size={14} /> : <ShoppingCart size={14} />}
+                            <div className={cn(
+                                "absolute -left-4 top-1 h-8 w-8 rounded-full flex items-center justify-center border-2 border-black",
+                                isPayment ? "bg-emerald-500 text-black" : (isInstallmentPurchase ? "bg-red-500 text-white" : "bg-white/10 text-white")
+                            )}>
+                                {isPayment ? <CreditCard size={14} /> : (isInstallmentPurchase ? <Wallet size={14} /> : <ShoppingCart size={14} />)}
                             </div>
 
                             <div className="glass rounded-2xl p-5 border border-white/5 group hover:border-white/20 transition-all cursor-pointer">
                                 <div className="flex justify-between items-center mb-2">
                                     <div className="flex items-center gap-2">
-                                        <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${isPayment ? 'bg-emerald-500/20 text-emerald-400' : 'bg-blue-500/20 text-blue-400'}`}>
-                                            {isPayment ? 'Debt Payment' : 'Store Purchase'}
+                                        <span className={cn(
+                                            "text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full",
+                                            isPayment ? "bg-emerald-500/20 text-emerald-400" : (isInstallmentPurchase ? "bg-red-500/20 text-red-100 uppercase" : "bg-blue-500/20 text-blue-400")
+                                        )}>
+                                            {isPayment ? 'Debt Payment' : (isInstallmentPurchase ? 'Installment Debt' : 'Store Purchase')}
                                         </span>
                                         <span className="text-xs text-zinc-500 font-mono">{date}</span>
                                     </div>
