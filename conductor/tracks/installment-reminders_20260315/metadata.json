@@ -1,0 +1,16 @@
+{
+    "id": "installment-reminders_20260315",
+    "title": "Installment Payments & LINE Reminders",
+    "type": "feature",
+    "status": "in_progress",
+    "created": "2026-03-15T13:40:00Z",
+    "updated": "2026-03-15T13:40:00Z",
+    "phases": {
+        "total": 4,
+        "completed": 1
+    },
+    "tasks": {
+        "total": 11,
+        "completed": 3
+    }
+}

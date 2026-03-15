@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui;
+
+  --color-primary-50: oklch(0.97 0.01 291.07);
+  --color-primary-100: oklch(0.91 0.03 291.07);
+  --color-primary-200: oklch(0.83 0.06 291.07);
+  --color-primary-300: oklch(0.74 0.10 291.07);
+  --color-primary-400: oklch(0.65 0.15 291.07);
+  --color-primary-500: oklch(0.55 0.19 291.07);
+  --color-primary-600: oklch(0.48 0.20 291.07);
+  --color-primary-700: oklch(0.40 0.19 291.07);
+  --color-primary-800: oklch(0.32 0.16 291.07);
+  --color-primary-900: oklch(0.24 0.12 291.07);
+  --color-primary-950: oklch(0.16 0.08 291.07);
+
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+  --color-amber-950: #451a03;
+
+  --color-violet-cta: #8B5CF6;
+}
+
+@layer base {
+  :root {
+    --background: oklch(0.1 0 0);
+    --foreground: oklch(0.98 0 0);
+    --card: oklch(0.12 0.01 0);
+    --card-foreground: oklch(0.98 0 0);
+    --popover: oklch(0.1 0 0);
+    --popover-foreground: oklch(0.98 0 0);
+    --primary: oklch(0.55 0.19 291.07);
+    --primary-foreground: oklch(0.98 0 0);
+    --secondary: oklch(0.18 0.02 0);
+    --secondary-foreground: oklch(0.98 0 0);
+    --muted: oklch(0.18 0.02 0);
+    --muted-foreground: oklch(0.65 0.02 0);
+    --accent: oklch(0.18 0.02 0);
+    --accent-foreground: oklch(0.98 0 0);
+    --destructive: oklch(0.6 0.2 25);
+    --destructive-foreground: oklch(0.98 0 0);
+    --border: oklch(0.2 0.02 0);
+    --input: oklch(0.2 0.02 0);
+    --ring: oklch(0.55 0.19 291.07);
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.animate-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

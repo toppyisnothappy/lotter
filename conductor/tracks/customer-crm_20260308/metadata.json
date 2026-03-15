@@ -1,0 +1,16 @@
+{
+    "id": "customer-crm_20260308",
+    "title": "Customer Debt Management",
+    "type": "feature",
+    "status": "complete",
+    "created": "2026-03-08T12:00:00Z",
+    "updated": "2026-03-08T12:00:00Z",
+    "phases": {
+        "total": 3,
+        "completed": 0
+    },
+    "tasks": {
+        "total": 9,
+        "completed": 0
+    }
+}
