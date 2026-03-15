@@ -21,6 +21,11 @@ export function CheckoutModal({ isOpen, onClose, organizationId }: CheckoutModal
     const [paymentAmount, setPaymentAmount] = useState<string>(totalAmount.toString())
     const [paymentType, setPaymentType] = useState<'cash' | 'card' | 'installment'>('cash')
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
+    const [dueDate, setDueDate] = useState<string>(() => {
+        const d = new Date()
+        d.setDate(d.getDate() + 30) // Default 30 days
+        return d.toISOString().split('T')[0]
+    })
     const [isProcessing, setIsProcessing] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -47,7 +52,8 @@ export function CheckoutModal({ isOpen, onClose, organizationId }: CheckoutModal
                 })),
                 discount_amount: 0,
                 payment_amount: Number(paymentAmount),
-                payment_type: paymentType
+                payment_type: paymentType,
+                due_date: paymentType === 'installment' ? dueDate : undefined
             })
 
             if ('success' in result && result.success) {
@@ -114,6 +120,21 @@ export function CheckoutModal({ isOpen, onClose, organizationId }: CheckoutModal
                     />
                 </div>
 
+                {paymentType === 'installment' && (
+                    <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                        <label className="block text-sm font-bold text-zinc-400 mb-2">Installment Due Date</label>
+                        <input
+                            type="date"
+                            value={dueDate}
+                            onChange={(e) => setDueDate(e.target.value)}
+                            className="w-full h-12 bg-white/5 border border-white/10 rounded-xl px-4 text-white font-bold focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
+                        />
+                        <p className="mt-2 text-[10px] text-zinc-500 font-medium italic">
+                            Credit will be tracked in CRM under {selectedCustomer?.full_name || 'selected customer'}.
+                        </p>
+                    </div>
+                )}
+
                 {paymentType === 'cash' && changeDue > 0 && (
                     <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex justify-between items-center text-emerald-400">
                         <span className="font-bold">Change Due</span>
@@ -130,7 +151,7 @@ export function CheckoutModal({ isOpen, onClose, organizationId }: CheckoutModal
                 <div className="pt-4 border-t border-white/10">
                     <button
                         onClick={handleCheckout}
-                        disabled={isProcessing || Number(paymentAmount) < totalAmount}
+                        disabled={isProcessing || (paymentType !== 'installment' && Number(paymentAmount) < totalAmount)}
                         className="w-full h-14 bg-primary-500 hover:bg-primary-400 text-white font-black text-lg rounded-xl shadow-xl shadow-primary-500/20 disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
                     >
                         {isProcessing ? <Loader2 size={24} className="animate-spin" /> : 'Confirm Payment'}

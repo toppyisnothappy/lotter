@@ -7,6 +7,7 @@ export interface Transaction {
     discount_amount: number;
     net_amount: number;
     status: 'complete' | 'partial' | 'cancelled';
+    dueDate: string | null;
     created_at: string;
     updated_at: string;
 }
@@ -36,4 +37,5 @@ export interface ProcessTransactionInput {
     discount_amount?: number;
     payment_amount: number;
     payment_type: 'cash' | 'card' | 'installment' | 'other';
+    due_date?: string;
 }

@@ -64,6 +64,21 @@ Enable customers to see their payment history.
 
 - [x] View a customer profile and confirm a clear history of debt-related activities.
 
+## Phase 5: Installment Fixes & Periods
+
+Address the partial payment limitation and add installment period tracking.
+
+### Tasks
+
+- [x] Task 5.1: Add `dueDate` column (datetime) to `transactions` table in `src/shared/lib/db/schema.ts`.
+- [x] Task 5.2: Update `Transaction` entity and `processTransaction` action to correctly handle `dueDate`.
+- [x] Task 5.3: Update `CheckoutModal` UI to allow entering a `paymentAmount` less than total when "Installment" is selected.
+- [x] Task 5.4: Add "Due Date" picker to the `CheckoutModal` when "Installment" is selected.
+
+### Verification
+
+- [x] Perform a partial payment installment and verify the correct debt amount appears and the due date is saved.
+
 ## Final Verification
 
 - [x] All acceptance criteria met.

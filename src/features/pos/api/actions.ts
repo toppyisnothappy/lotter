@@ -7,7 +7,7 @@ import { eq, sql } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 
 export async function processTransaction(input: ProcessTransactionInput) {
-    const { organization_id, customer_id, items, discount_amount = 0, payment_amount, payment_type } = input
+    const { organization_id, customer_id, items, discount_amount = 0, payment_amount, payment_type, due_date } = input
 
     // 1. Calculate totals
     const totalAmount = items.reduce((sum, item) => sum + (item.quantity * item.unit_price), 0)
@@ -32,6 +32,7 @@ export async function processTransaction(input: ProcessTransactionInput) {
                 discountAmount: discount_amount.toString(),
                 netAmount: netAmount.toString(),
                 status: status,
+                dueDate: due_date ? new Date(due_date) : null,
             })
 
             // 3. Create Items & Update Stock

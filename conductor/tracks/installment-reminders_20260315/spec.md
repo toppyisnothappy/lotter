@@ -22,7 +22,9 @@ Small retail businesses often provide credit or installment plans to trusted cus
 
 - [ ] **POS Customer Picker**: Ability to search and select a registered customer during the POS checkout flow.
 - [ ] **Installment Method**: A new "Installment" payment option in the `CheckoutModal`.
-- [ ] **Debt Persistence**: Finalizing an installment sale must automatically increase the customer's `total_balance` in the database.
+- [ ] **Partial Payments**: Support for paying a portion of the total upfront during an installment checkout (e.g., $10 down payment, $90 on tab).
+- [ ] **Installment Periods**: Ability to set a "Due Date" or "Repayment Period" for the remaining balance.
+- [ ] **Debt Persistence**: Finalizing an installment sale must automatically increase the customer's `total_balance` by the *unpaid* portion.
 - [ ] **LINE Push Service**: Integration with LINE Messaging API (or a simulated robust utility) to send templated push messages.
 - [ ] **Billing View**: A dashboard in the CRM showing:
     - Total amount of all installments.
@@ -44,7 +46,8 @@ Small retail businesses often provide credit or installment plans to trusted cus
 
 ## Technical Notes
 
-- The `processTransaction` server action needs to be updated to accept `customer_id` and handle the `payment_type: 'installment'`.
+- The `processTransaction` server action needs to be updated to accept `customer_id`, handle the `payment_type: 'installment'`, and calculate debt based on `net_amount - payment_amount`.
+- A `due_date` field should be added to the `transactions` table to track the installment period.
 - Environment variables `LINE_CHANNEL_ACCESS_TOKEN` and `LINE_CHANNEL_SECRET` will be used for the messaging logic.
 
 ---

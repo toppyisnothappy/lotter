@@ -102,6 +102,7 @@ export const transactions = mysqlTable('transactions', {
     discountAmount: decimal('discount_amount', { precision: 12, scale: 2 }).notNull().default('0.00'),
     netAmount: decimal('net_amount', { precision: 12, scale: 2 }).notNull().default('0.00'),
     status: mysqlEnum('status', ['complete', 'partial', 'cancelled']).notNull().default('complete'),
+    dueDate: datetime('due_date'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
 });

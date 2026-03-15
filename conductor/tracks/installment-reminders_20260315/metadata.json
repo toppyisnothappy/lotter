@@ -4,13 +4,13 @@
     "type": "feature",
     "status": "done",
     "created": "2026-03-15T13:40:00Z",
-    "updated": "2026-03-15T15:10:00Z",
+    "updated": "2026-03-15T15:30:00Z",
     "phases": {
-        "total": 4,
-        "completed": 4
+        "total": 5,
+        "completed": 5
     },
     "tasks": {
-        "total": 11,
-        "completed": 11
+        "total": 15,
+        "completed": 15
     }
 }
