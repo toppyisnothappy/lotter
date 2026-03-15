@@ -43,13 +43,13 @@ Provide the store owner with tools to manage installments.
 
 ### Tasks
 
-- [ ] Task 3.1: Create `InstallmentDashboard` component in the CRM section.
-- [ ] Task 3.2: Implement logic to calculate "Full Exposure" (Total debt across all customers).
-- [ ] Task 3.3: Add "Remind via LINE" button to the `CustomerTable` or a specific Billing View.
+- [x] Task 3.1: Create `InstallmentDashboard` component in the CRM section.
+- [x] Task 3.2: Implement logic to calculate "Full Exposure" (Total debt across all customers).
+- [x] Task 3.3: Add "Remind via LINE" button to the `CustomerTable` or a specific Billing View.
 
 ### Verification
 
-- [ ] Verify the "Total Installments" count and sum match the database records.
+- [x] Verify the "Total Installments" count and sum match the database records.
 
 ## Phase 4: Buyer Payment Trace
 

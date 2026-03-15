@@ -1,10 +1,12 @@
 "use client"
 
 import { Customer } from "@/entities/customer/model/types"
-import { Edit2, Trash2, User, Phone, Mail, CreditCard, MoreVertical, Eye } from "lucide-react"
+import { Edit2, Trash2, User, Phone, Mail, CreditCard, MoreVertical, Eye, MessageSquare, Loader2 } from "lucide-react"
 import { cn } from "@/shared/lib/utils/utils"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import { sendInstallmentReminderAction } from "../api/line"
+import { useState } from "react"
 
 interface CustomerTableProps {
     customers: Customer[]
@@ -15,6 +17,26 @@ interface CustomerTableProps {
 export function CustomerTable({ customers, onEdit, onDelete }: CustomerTableProps) {
     const params = useParams()
     const slug = params?.slug as string
+    const [sendingId, setSendingId] = useState<string | null>(null)
+
+    const handleSendReminder = async (customerId: string) => {
+        setSendingId(customerId)
+        try {
+            const organizationId = customers.find(c => c.id === customerId)?.organization_id
+            if (!organizationId) return
+
+            const result = await sendInstallmentReminderAction(organizationId, customerId)
+            if (result.success) {
+                alert("Reminder sent successfully")
+            } else {
+                alert(result.error)
+            }
+        } catch (e) {
+            console.error(e)
+        } finally {
+            setSendingId(null)
+        }
+    }
 
     if (customers.length === 0) {
         return (
@@ -97,6 +119,16 @@ export function CustomerTable({ customers, onEdit, onDelete }: CustomerTableProp
                                         >
                                             <Eye size={18} />
                                         </Link>
+                                        {customer.total_balance > 0 && customer.line_id && (
+                                            <button
+                                                onClick={() => handleSendReminder(customer.id)}
+                                                disabled={sendingId === customer.id}
+                                                className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 hover:text-white hover:bg-emerald-500 border border-emerald-500/20 transition-all disabled:opacity-50"
+                                                title="Send LINE Reminder"
+                                            >
+                                                {sendingId === customer.id ? <Loader2 size={18} className="animate-spin" /> : <MessageSquare size={18} />}
+                                            </button>
+                                        )}
                                         <button
                                             onClick={() => onEdit?.(customer)}
                                             className="p-2.5 rounded-xl bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5 transition-all"

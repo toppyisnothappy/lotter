@@ -9,6 +9,7 @@ import { CustomerForm } from "./CustomerForm"
 import { CustomerFormValues } from "@/entities/customer/model/schema"
 import { createCustomerAction, updateCustomerAction } from "../api/actions"
 import { CustomerSearch } from "./CustomerSearch"
+import { InstallmentStats } from "./InstallmentStats"
 
 interface CustomerHubProps {
     initialCustomers: Customer[]
@@ -86,39 +87,7 @@ export function CustomerHub({ initialCustomers, organizationId }: CustomerHubPro
             </header>
 
             {/* Overview Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div className="glass p-8 rounded-[2rem] border-white/5 flex items-center gap-6">
-                    <div className="h-14 w-14 rounded-2xl bg-primary-500/10 flex items-center justify-center text-primary-400 border border-primary-500/20 text-2xl font-black">
-                        {initialCustomers.length}
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-extrabold text-zinc-500 uppercase tracking-widest leading-none mb-2">Total Contacts</p>
-                        <h3 className="text-2xl font-display font-bold text-white">Registered</h3>
-                    </div>
-                </div>
-
-                <div className="glass p-8 rounded-[2rem] border-white/5 flex items-center gap-6">
-                    <div className="h-14 w-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20">
-                        <UserCheck size={28} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-extrabold text-zinc-500 uppercase tracking-widest leading-none mb-2">Good Standing</p>
-                        <h3 className="text-2xl font-display font-bold text-white">
-                            {initialCustomers.length > 0 ? Math.round(((initialCustomers.length - highExposureCount) / initialCustomers.length) * 100) : 0}% of total
-                        </h3>
-                    </div>
-                </div>
-
-                <div className="glass p-8 rounded-[2rem] border-white/5 flex items-center gap-6">
-                    <div className="h-14 w-14 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-400 border border-red-500/20">
-                        <ShieldAlert size={28} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] font-extrabold text-zinc-500 uppercase tracking-widest leading-none mb-2">High Exposure</p>
-                        <h3 className="text-2xl font-display font-bold text-white">{highExposureCount} customers</h3>
-                    </div>
-                </div>
-            </div>
+            <InstallmentStats customers={initialCustomers} />
 
             <div className="glass rounded-3xl p-4 border-white/5 mb-8 flex flex-col md:flex-row gap-4">
                 <CustomerSearch />
