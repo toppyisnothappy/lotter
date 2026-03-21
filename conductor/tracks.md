@@ -13,6 +13,7 @@ This document tracks all logical units of work (tracks) for the Lotter project.
 
 | 🏁 Completed | pos-ux-enhancements_20260315 | POS UX Enhancements | 2026-03-15 | 2026-03-15 |
 | 🏁 Completed | customer-line-id_20260315 | Customer LINE ID Integration | 2026-03-15 | 2026-03-15 |
-| 🟢 Active | installment-reminders_20260315 | Installment Payments & LINE Reminders | 2026-03-15 | 2026-03-15 |
+| 🏁 Completed | installment-reminders_20260315 | Installment Payments & LINE Reminders | 2026-03-15 | 2026-03-15 |
+| 🔴 Pending | auth-leak-fix_20260321 | Auth & Route Protection Remediation | 2026-03-21 | 2026-03-21 |
 
 <!-- Tracks registered by /conductor:new-track -->

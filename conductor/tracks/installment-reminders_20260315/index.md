@@ -1,7 +1,7 @@
 # Track: Installment Payments & LINE Reminders
 
 **ID:** installment-reminders_20260315
-**Status:** In Progress
+**Status:** Done
 
 ## Documents
 
@@ -10,8 +10,8 @@
 
 ## Progress
 
-- Phases: 4/5 complete
-- Tasks: 11/15 complete
+- Phases: 9/9 complete
+- Tasks: 31/31 complete
 
 ## Quick Links
 

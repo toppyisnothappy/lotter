@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useCartStore } from "../model/useCartStore"
 import { Modal } from "@/shared/ui/Modal"
 import { processTransaction } from "../api/actions"
@@ -26,8 +26,29 @@ export function CheckoutModal({ isOpen, onClose, organizationId }: CheckoutModal
         d.setDate(d.getDate() + 30) // Default 30 days
         return d.toISOString().split('T')[0]
     })
+    const [installmentMonths, setInstallmentMonths] = useState<number>(1)
     const [isProcessing, setIsProcessing] = useState(false)
     const [error, setError] = useState<string | null>(null)
+
+    // Automatically align due date to installment period (Same Day logic)
+    useEffect(() => {
+        if (paymentType === 'installment') {
+            const d = new Date()
+            d.setMonth(d.getMonth() + installmentMonths)
+            setDueDate(d.toISOString().split('T')[0])
+        }
+    }, [installmentMonths, paymentType])
+
+    const getScheduleDates = () => {
+        const dates: Date[] = []
+        const start = new Date()
+        for (let i = 1; i <= installmentMonths; i++) {
+            const d = new Date(start)
+            d.setMonth(start.getMonth() + i)
+            dates.push(d)
+        }
+        return dates
+    }
 
     const handleCheckout = async () => {
         setIsProcessing(true)
@@ -53,7 +74,8 @@ export function CheckoutModal({ isOpen, onClose, organizationId }: CheckoutModal
                 discount_amount: 0,
                 payment_amount: Number(paymentAmount),
                 payment_type: paymentType,
-                due_date: paymentType === 'installment' ? dueDate : undefined
+                due_date: paymentType === 'installment' ? dueDate : undefined,
+                installment_months: paymentType === 'installment' ? installmentMonths : undefined
             })
 
             if ('success' in result && result.success) {
@@ -121,15 +143,61 @@ export function CheckoutModal({ isOpen, onClose, organizationId }: CheckoutModal
                 </div>
 
                 {paymentType === 'installment' && (
-                    <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                        <label className="block text-sm font-bold text-zinc-400 mb-2">Installment Due Date</label>
-                        <input
-                            type="date"
-                            value={dueDate}
-                            onChange={(e) => setDueDate(e.target.value)}
-                            className="w-full h-12 bg-white/5 border border-white/10 rounded-xl px-4 text-white font-bold focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
-                        />
-                        <p className="mt-2 text-[10px] text-zinc-500 font-medium italic">
+                    <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-xs font-black text-zinc-500 uppercase tracking-widest mb-2">Final Due Date</label>
+                                <input
+                                    type="date"
+                                    value={dueDate}
+                                    onChange={(e) => setDueDate(e.target.value)}
+                                    className="w-full h-12 bg-white/5 border border-white/10 rounded-xl px-4 text-white font-bold focus:outline-none focus:border-primary-500 transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs font-black text-zinc-500 uppercase tracking-widest mb-2">Period (Months)</label>
+                                <select
+                                    value={installmentMonths}
+                                    onChange={(e) => setInstallmentMonths(parseInt(e.target.value))}
+                                    className="w-full h-12 bg-zinc-900 border border-white/10 rounded-xl px-4 text-white font-bold focus:outline-none focus:border-primary-500 transition-all appearance-none cursor-pointer"
+                                >
+                                    {[1, 2, 3, 4, 5, 6, 12].map(m => (
+                                        <option key={m} value={m}>{m} Month{m > 1 ? 's' : ''}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        {installmentMonths > 1 && (
+                            <div className="space-y-3">
+                                <div className="p-4 bg-primary-500/5 border border-primary-500/10 rounded-2xl">
+                                    <div className="flex justify-between items-center mb-1">
+                                        <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Monthly Estimate</span>
+                                        <span className="text-primary-400 font-black">
+                                            ${((totalAmount - Number(paymentAmount)) / installmentMonths).toFixed(2)} / mo
+                                        </span>
+                                    </div>
+                                    <p className="text-[10px] text-zinc-600 italic">
+                                        Calculated for the balance of ${(totalAmount - Number(paymentAmount)).toFixed(2)}
+                                    </p>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest px-1">Planned Schedule (Same Day Every Month)</p>
+                                    <div className="grid grid-cols-1 gap-2">
+                                        {getScheduleDates().map((date, i) => (
+                                            <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/5 text-[10px]">
+                                                <span className="text-zinc-500 font-bold uppercase">Month {i + 1}</span>
+                                                <span className="text-white font-mono">{date.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                                                <span className="text-emerald-500 font-black">${((totalAmount - Number(paymentAmount)) / installmentMonths).toFixed(2)}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <p className="text-[10px] text-zinc-500 font-medium italic">
                             Credit will be tracked in CRM under {selectedCustomer?.full_name || 'selected customer'}.
                         </p>
                     </div>

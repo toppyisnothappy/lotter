@@ -24,6 +24,8 @@ export async function processTransaction(input: ProcessTransactionInput) {
     try {
         return await db.transaction(async (tx) => {
             // 2. Create Transaction Header
+            const { installment_months = 1 } = input
+
             await tx.insert(transactions).values({
                 id: transactionId,
                 organizationId: organization_id,
@@ -33,6 +35,7 @@ export async function processTransaction(input: ProcessTransactionInput) {
                 netAmount: netAmount.toString(),
                 status: status,
                 dueDate: due_date ? new Date(due_date) : null,
+                installmentMonths: installment_months,
             })
 
             // 3. Create Items & Update Stock
