@@ -15,7 +15,7 @@ export default function Home() {
           </span>
         </div>
         <Link
-          href="/request-account"
+          href="/login"
           className="rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-black transition-all hover:scale-105 active:scale-95"
         >
           Login

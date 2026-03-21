@@ -1,4 +1,6 @@
 import { ShopSidebar } from "@/widgets/navbar/ui/ShopSidebar"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 
 export default async function ShopLayout({
     children,
@@ -7,7 +9,12 @@ export default async function ShopLayout({
     children: React.ReactNode
     params: Promise<{ slug: string }>
 }) {
+    const session = await auth()
     const { slug } = await params
+
+    if (!session?.user) {
+        redirect(`/login?callbackUrl=/${slug}`)
+    }
 
     return (
         <div className="flex min-h-screen bg-black text-white">

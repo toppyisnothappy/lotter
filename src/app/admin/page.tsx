@@ -4,8 +4,23 @@ import { SidebarItem } from "./_components/SidebarItem"
 import { StatCard } from "./_components/StatCard"
 import { OrganizationTable } from "@/features/admin-approval/ui/OrganizationTable"
 import { getAllOrganizations } from "@/entities/organization/api"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 
 export default async function AdminDashboard() {
+    const session = await auth()
+
+    // 1. Unauthenticated check
+    if (!session?.user) {
+        redirect("/login?callbackUrl=/admin")
+    }
+
+    // 2. Role check (Clerk is disallowed)
+    const role = (session.user as any).role
+    if (role === 'clerk') {
+        redirect("/")
+    }
+
     const organizations = await getAllOrganizations()
     const pendingCount = organizations.filter(o => o.status === 'pending').length
 
