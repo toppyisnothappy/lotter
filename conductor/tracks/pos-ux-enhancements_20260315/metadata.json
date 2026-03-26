@@ -1,0 +1,16 @@
+{
+    "id": "pos-ux-enhancements_20260315",
+    "title": "POS UX Enhancements",
+    "type": "feature",
+    "status": "done",
+    "created": "2026-03-15T12:45:00Z",
+    "updated": "2026-03-15T13:25:00Z",
+    "phases": {
+        "total": 3,
+        "completed": 3
+    },
+    "tasks": {
+        "total": 8,
+        "completed": 8
+    }
+}

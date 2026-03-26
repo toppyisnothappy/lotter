@@ -1,0 +1,16 @@
+{
+    "id": "inventory-mgmt_20260305",
+    "title": "Inventory Engine: Core Management",
+    "type": "feature",
+    "status": "completed",
+    "created": "2026-03-05T23:24:00Z",
+    "updated": "2026-03-06T00:50:00Z",
+    "phases": {
+        "total": 3,
+        "completed": 3
+    },
+    "tasks": {
+        "total": 11,
+        "completed": 11
+    }
+}

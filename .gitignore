@@ -20,9 +20,6 @@
 # production
 /build
 
-# conductor
-/conductor
-/.agent
 
 # misc
 .DS_Store

@@ -1,3 +1,7 @@
+## Create admin user
+
+
+
 # Lotter - Modern Retail Management System
 
 Lotter is a high-performance, multi-tenant retail management platform designed to handle complex inventory, credit sales, and customer installment debts with a premium, glassmorphic UI.
@@ -43,15 +47,6 @@ npm install
 ### 3. Environment Setup
 
 Create a `.env` file in the root directory (refer to `.env.example`):
-
-```bash
-# MySQL Connection
-DATABASE_URL=mysql://root:password@127.0.0.1:3306/lotter
-
-# Auth.js
-AUTH_SECRET=your_auth_secret
-AUTH_URL=http://localhost:3000
-```
 
 ### 4. Database Setup
 

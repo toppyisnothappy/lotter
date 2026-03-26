@@ -1,0 +1,16 @@
+{
+    "id": "auth-leak-fix_20260321",
+    "title": "Auth & Route Protection Remediation",
+    "type": "bug",
+    "status": "pending",
+    "created": "2026-03-21T10:33:00Z",
+    "updated": "2026-03-21T10:33:00Z",
+    "phases": {
+        "total": 3,
+        "completed": 0
+    },
+    "tasks": {
+        "total": 8,
+        "completed": 0
+    }
+}
